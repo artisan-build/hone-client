@@ -1,19 +1,15 @@
 {
     "name": "artisan-build/hone-client",
     "description": "Routes a Laravel app's own laravel/nightwatch telemetry to a self-hosted Hone server. Installed in monitored apps.",
-    "keywords": ["hone", "telemetry", "nightwatch", "laravel", "observability"],
+    "keywords": [
+        "hone",
+        "telemetry",
+        "nightwatch",
+        "laravel",
+        "observability"
+    ],
     "license": "MIT",
     "type": "library",
-    "version": "1.0.0",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../hone-contracts",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "php": "^8.3",
         "artisan-build/hone-contracts": "^1.0",
