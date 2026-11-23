@@ -1693,6 +1693,27 @@ it('carries a dropped batch loss count to Hone in a later request', function ():
         ->and($envelopes[1])->toHaveKey('losses.failed_delivery_records', 2);
 });
 
+it('reports a carried loss after connectivity returns without waiting for another telemetry record', function (): void {
+    $envelopes = [];
+    $options = [];
+    fakeHoneIngestEndpoint([1], $envelopes, $options);
+
+    configureHoneConsumer();
+
+    $terminated = app(HoneIngest::class);
+    $terminated->write(['t' => 'query', 'index' => 1]);
+    $terminated->digest();
+
+    unset($terminated);
+
+    $later = app(HoneIngest::class);
+    $later->digest();
+
+    expect($envelopes)->toHaveCount(2)
+        ->and($envelopes[1]['records'])->toBe([])
+        ->and($envelopes[1])->toHaveKey('losses.failed_delivery_records', 1);
+});
+
 it('reports a carried loss count once', function (): void {
     $envelopes = [];
     $options = [];
